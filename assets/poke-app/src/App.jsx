@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Cards from "./components/Cards.jsx";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const response = await fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
       const data = await response.json();
       setPokemonList(data.results);
     };
     fetchPokemon();
-  }, []);
+  }, [offset]);
+
+  const handleNext = () => setOffset(prev => prev + 20);
+  const handleBack = () => {
+    if (offset >= 20) setOffset(prev => prev - 20);
+  };
 
   return (
     <div className="App">
       <h1>Pokémon List</h1>
-      <div className="cards">
-        {pokemonList.map(p => (
-          <button key={p.name} className="card">
-            {p.name}
-          </button>
-        ))}
+      <Cards pokemonList={pokemonList} />
+      <div>
+        <button onClick={handleBack} disabled={offset === 0}>Back</button>
+        <button onClick={handleNext}>Next</button>
       </div>
     </div>
   );
