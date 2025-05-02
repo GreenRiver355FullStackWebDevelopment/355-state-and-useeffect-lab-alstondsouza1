@@ -1,33 +1,40 @@
-import { useState } from "react";
-import CardDetail from "../components/CardDetail.jsx";
+import { Box, Paper, Typography } from "@mui/material";
 
-const Cards = ({ pokemonList }) => {
-  const [pokemon, setPokemon] = useState(null);
-
-  // function to fetch and set the selected Pokémon details
-  const onPokemonClick = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
-    setPokemon(data); // update state with fetched Pokémon data
-  };
-
+// component to display the list of Pokémon cards
+const Cards = ({ pokemonData, onSelect }) => {
   return (
-    <div className="cards-wrapper">
-      <div className="cards">
-        {pokemonList.map((p) => (
-          <div
-            key={p.name}
-            className="card"
-            onClick={() => onPokemonClick(p.url)} // fetch Pokémon details on click
-          >
-            {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
-          </div>
-        ))}
-      </div>
-
-       {/* show Pokémon details when a card is clicked */}
-      {pokemon && <CardDetail pokemon={pokemon} />}
-    </div>
+    <Box sx={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+        gap: 1,
+        backgroundColor: "#1f1f1f",
+        padding: "1rem",
+        borderRadius: "8px",
+        maxWidth: 600,
+        margin: "0 auto",
+      }}
+    >
+      {pokemonData.map((pokemonItem, index) => (
+        <Paper
+          key={index}
+          onClick={() => onSelect(pokemonItem.url)}
+          sx={{
+            backgroundColor: "#3B3B3B",
+            color: "white",
+            padding: "0.5rem",
+            cursor: "pointer",
+            textAlign: "center",
+            ":hover": {
+              backgroundColor: "#555",
+            },
+          }}
+        >
+          <Typography>
+            {pokemonItem.name.charAt(0).toUpperCase() + pokemonItem.name.slice(1)}
+          </Typography>
+        </Paper>
+      ))}
+    </Box>
   );
 };
 
