@@ -8,8 +8,8 @@ function App() {
 
   useEffect(() => {
     const fetchPokemon = async () => {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
-      const data = await response.json();
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
+      const data = await res.json();
       setPokemonList(data.results);
     };
     fetchPokemon();
