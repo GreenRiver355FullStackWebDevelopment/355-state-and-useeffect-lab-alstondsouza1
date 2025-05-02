@@ -3,9 +3,11 @@ import "./App.css";
 import Cards from "./components/Cards.jsx";
 
 function App() {
+  // state to hold the list of Pokémon and the offset for pagination
   const [pokemonList, setPokemonList] = useState([]);
   const [offset, setOffset] = useState(0);
 
+  // fetch pokémon data from the API
   useEffect(() => {
     const fetchPokemon = async () => {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
@@ -15,6 +17,7 @@ function App() {
     fetchPokemon();
   }, [offset]);
 
+  // handlers for pagination
   const handleNext = () => setOffset((prev) => prev + 20);
   const handleBack = () => {
     if (offset >= 20) setOffset((prev) => prev - 20);
@@ -24,6 +27,7 @@ function App() {
     <div className="App">
       <h1>Pokémon List</h1>
       <Cards pokemonList={pokemonList} />
+      {/* pagination controls */}
       <div className="pagination">
         <button onClick={handleBack} disabled={offset === 0}>Back</button>
         <button onClick={handleNext}>Next</button>
