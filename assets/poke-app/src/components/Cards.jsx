@@ -11,16 +11,19 @@ const Cards = ({ pokemonList }) => {
   };
 
   return (
-    <div className="cards">
-      {pokemonList.map((p) => (
-        <div
-          key={p.name}
-          className="card"
-          onClick={() => onPokemonClick(p.url)}
-        >
-          {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
-        </div>
-      ))}
+    <div className="cards-wrapper">
+      <div className="cards">
+        {pokemonList.map((p) => (
+          <div
+            key={p.name}
+            className="card"
+            onClick={() => onPokemonClick(p.url)}
+          >
+            {p.name.charAt(0).toUpperCase() + p.name.slice(1)}
+          </div>
+        ))}
+      </div>
+
       {pokemon && <CardDetail pokemon={pokemon} />}
     </div>
   );

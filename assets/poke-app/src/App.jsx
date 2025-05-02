@@ -15,16 +15,16 @@ function App() {
     fetchPokemon();
   }, [offset]);
 
-  const handleNext = () => setOffset(prev => prev + 20);
+  const handleNext = () => setOffset((prev) => prev + 20);
   const handleBack = () => {
-    if (offset >= 20) setOffset(prev => prev - 20);
+    if (offset >= 20) setOffset((prev) => prev - 20);
   };
 
   return (
     <div className="App">
       <h1>Pokémon List</h1>
       <Cards pokemonList={pokemonList} />
-      <div>
+      <div className="pagination">
         <button onClick={handleBack} disabled={offset === 0}>Back</button>
         <button onClick={handleNext}>Next</button>
       </div>
